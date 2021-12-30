@@ -19,6 +19,11 @@ namespace Tsunami.Handlers
                     {
                         Flooder.HttpFlooder(arguments[1], int.Parse(arguments[2]), int.Parse(arguments[3]));
                     }
+
+                    if(Enum.Parse<Args>(arguments[0]) == Args.ip)
+                    {
+                        Flooder.IPFlooder(arguments[1], int.Parse(arguments[2]), int.Parse(arguments[3]));
+                    }
                 }
                 
                 if(arguments.Count() == 3)
@@ -26,6 +31,11 @@ namespace Tsunami.Handlers
                     if (Enum.Parse<Args>(arguments[0]) == Args.http)
                     {
                         Flooder.HttpFlooder(arguments[1], int.Parse(arguments[2]));
+                    }
+
+                    if (Enum.Parse<Args>(arguments[0]) == Args.ip)
+                    {
+                        Flooder.IPFlooder(arguments[1], int.Parse(arguments[2]));
                     }
                 } 
 

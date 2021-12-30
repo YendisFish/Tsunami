@@ -8,6 +8,7 @@ namespace Tsunami.Types
 {
     public enum Args
     {
-        http
+        http,
+        ip
     }
 }

