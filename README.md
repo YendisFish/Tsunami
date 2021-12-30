@@ -1,5 +1,5 @@
 # Tsunami
-HTTP Flooder for Linux/Windows
+Network flooder for Linux/Windows
 
 How to use:
 ```
